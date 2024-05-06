@@ -1,0 +1,39 @@
+.title{
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 35px auto;
+}
+
+header{
+    border-bottom: 2px solid black;
+}
+
+.loading{
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    margin: 20px 0;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+.alphabets-grid{
+    max-width: 150px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    margin: 0px auto;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+.alphabet-box{
+    height: 45px;
+    width: 45px;
+    border: 2px solid gray;
+}
