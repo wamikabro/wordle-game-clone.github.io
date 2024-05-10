@@ -21,11 +21,14 @@ header{
     border-bottom: 2px solid;
 }
 
-.loading{
+.loadingMaster{
     display: flex;
     justify-content: center;
-    font-size: 40px;
     margin: 20px 0;
+}
+.loading{
+    
+    font-size: 40px;
     animation: spin 1.5s linear infinite;
 }
 
