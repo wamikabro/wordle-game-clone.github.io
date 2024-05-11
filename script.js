@@ -5,7 +5,7 @@ const ANSWER_LENGTH = 5;
 async function init(){
     let currentGuess = '';
     let currentRow = 0;
-
+    
     const response = await fetch('https://words.dev-apis.com/word-of-the-day?random=1');
     // take out word from response.json's response and store it in word
     let {word} = await response.json();
@@ -35,13 +35,29 @@ async function init(){
             // TODO: make each letter green, yellow or gray
             const guessedLetters = currentGuess.split('');
             const correctWordLetters = word.split('');
+            // store the number of letters they occurr
+            const map = makeMap(correctWordLetters);
+
             for(let i = 0; i < ANSWER_LENGTH; i++){
                 if(guessedLetters[i] === correctWordLetters[i]){
                     letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("correct")
+                    map[guessedLetters[i]]--;
                 }
             }
-       
-            
+
+            for(let i = 0; i < ANSWER_LENGTH; i++){
+                if(guessedLetters[i] === correctWordLetters[i]){
+                    // do nothing
+                } else if(correctWordLetters.includes(guessedLetters[i])
+                        && map[guessedLetters[i]] > 0){
+                    // TODO: make it more accurate
+                    letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("close")
+                    map[guessedLetters[i]]--;
+                }else{
+                    letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("wrong")
+                }
+            }
+
             // TODO: win lose?
 
             // Change the row
@@ -82,6 +98,20 @@ async function init(){
 
 function setLoading(isLoading){
     loadingDiv.classList.toggle('show', isLoading);
+}
+
+// function to keep number of occurrance of each letter.
+function makeMap(array){
+    let letters = {};
+    for(let i=0; i<array.length; i++){
+        if(letters[array[i]]){
+            letters[array[i]]++;
+        }else{
+            letters[array[i]] = 1;
+        }
+    }
+
+    return letters;
 }
 
 init();
