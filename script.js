@@ -76,7 +76,7 @@ async function init(){
             // if current row has become 6 already, just close the game
             if(currentRow === CHANCES){
                 setTimeout(() => {
-                    alert('you lose, the word was ${word}'), 1000;
+                    alert(`you lose, the word was ${word}`), 1000;
                 }); 
                 
                 done = true;
