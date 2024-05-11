@@ -32,8 +32,35 @@ async function init(){
         return /^[a-zA-Z]$/.test(letter);
     }
 
+    async function wordValidator(word){
+        isLoading = true;
+        setLoading(true);
+        const response = await fetch('https://words.dev-apis.com/validate-word', {
+            method: "POST",
+            body: JSON.stringify({word: currentGuess}) // is the given word valid
+        });
+
+        const responseObject = await response.json();
+        const {validWord} = responseObject;
+
+        isLoading = false;
+        setLoading(false);
+
+        return validWord;
+
+    }
+
     async function commit(){
         if(currentGuess.length === ANSWER_LENGTH){
+            
+            // Validate the word: If it's invalid
+            if(!await wordValidator(currentGuess)){
+                // don't run
+                alert('word is invalid');
+                return;
+            }
+            
+
             const guessedLetters = currentGuess.split('');
             const correctWordLetters = word.split('');
 
