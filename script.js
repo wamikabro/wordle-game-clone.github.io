@@ -31,11 +31,11 @@ async function init(){
 
     async function commit(){
         if(currentGuess.length === ANSWER_LENGTH){
-            // TODO: validate the word
-            // TODO: make each letter green, yellow or gray
+            // TODO: win lose?
             const guessedLetters = currentGuess.split('');
             const correctWordLetters = word.split('');
-            // store the number of letters they occurr
+
+            // store the number of letters they occur
             const map = makeMap(correctWordLetters);
 
             for(let i = 0; i < ANSWER_LENGTH; i++){
@@ -43,6 +43,14 @@ async function init(){
                     letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("correct")
                     map[guessedLetters[i]]--;
                 }
+            }
+
+            if(currentGuess === word){
+                setTimeout(() => {
+                    alert('You Win!');
+                });
+                
+                return;
             }
 
             for(let i = 0; i < ANSWER_LENGTH; i++){
@@ -57,8 +65,6 @@ async function init(){
                     letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("wrong")
                 }
             }
-
-            // TODO: win lose?
 
             // Change the row
             currentRow++;
