@@ -14,7 +14,7 @@ async function init(){
     word = word.toUpperCase();
     setLoading(false); // loading icon toggle
     isLoading = false; // actual loading to control game
-    console.log(word)
+    // console.log(word)
     function addLetter(letter){
         if(currentGuess.length < ANSWER_LENGTH){
             // add letter at the end.
@@ -84,14 +84,6 @@ async function init(){
                 }
             }
 
-            // Win?
-            if(currentGuess === word){
-                setTimeout(() => {
-                    alert('You Win!'), 1000;
-                }); 
-                done = true;
-                return;
-            }
 
             for(let i = 0; i < ANSWER_LENGTH; i++){
                 if(guessedLetters[i] === correctWordLetters[i]){
@@ -108,16 +100,17 @@ async function init(){
             
             // Change the row
             currentRow++;
-            currentGuess = '';
 
-            // if current row has become 6 already, just close the game
-            if(currentRow === CHANCES){
-                setTimeout(() => {
-                    alert(`you lose, the word was ${word}`), 2000;
-                }); 
-                
+            // Win?
+            if(currentGuess === word){
+                alert('You Win!')
+            } // if current row has become 6 already, just close the game
+            else if(currentRow === CHANCES){
+                alert(`you lose, the word was ${word}`)             
                 done = true;
             }
+
+            currentGuess = '';
 
         }else{
             // do nothing
