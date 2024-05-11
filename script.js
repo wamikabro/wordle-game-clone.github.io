@@ -10,7 +10,8 @@ async function init(){
     // take out word from response.json's response and store it in word
     let {word} = await response.json();
     word = word.toUpperCase();
-
+    setLoading(false);
+    console.log(word)
     function addLetter(letter){
         if(currentGuess.length < ANSWER_LENGTH){
             // add letter at the end.
@@ -30,16 +31,26 @@ async function init(){
 
     async function commit(){
         if(currentGuess.length === ANSWER_LENGTH){
+            // TODO: validate the word
+            // TODO: make each letter green, yellow or gray
+            const guessedLetters = currentGuess.split('');
+            const correctWordLetters = word.split('');
+            for(let i = 0; i < ANSWER_LENGTH; i++){
+                if(guessedLetters[i] === correctWordLetters[i]){
+                    letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("correct")
+                }
+            }
+       
+            
+            // TODO: win lose?
+
+            // Change the row
             currentRow++;
             currentGuess = '';
 
-            // TODO: validate the word
-            // TODO: make each letter green, yellow or gray
-            // TODO: win lose?
-
         }else{
             // do nothing
-            // return
+            //return
         }
     }
 
@@ -69,6 +80,8 @@ async function init(){
     } )
 }
 
-
+function setLoading(isLoading){
+    loadingDiv.classList.toggle('show', isLoading);
+}
 
 init();

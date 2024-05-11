@@ -27,8 +27,8 @@ header{
     margin: 20px 0;
 }
 .loading{
-    
     font-size: 40px;
+    visibility: hidden;
     animation: spin 1.5s linear infinite;
 }
 
@@ -38,8 +38,8 @@ header{
     }
 }
 
-.hide{
-    visibility: hidden;
+.show{
+    visibility: visible;
 }
 
 .letters-grid{
