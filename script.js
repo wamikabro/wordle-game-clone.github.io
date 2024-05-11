@@ -1,7 +1,7 @@
 const letterBoxes = document.querySelectorAll('.letter-box');
 const loadingDiv = document.querySelector('.loading');
 const ANSWER_LENGTH = 5;
-
+const CHANCES = 6;
 async function init(){
     let currentGuess = '';
     let currentRow = 0;
@@ -65,10 +65,16 @@ async function init(){
                     letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("wrong")
                 }
             }
-
+            
             // Change the row
             currentRow++;
             currentGuess = '';
+
+            if(currentRow === CHANCES){ // if current row has become 6 already, just close the game
+                alert('you lose, the word was ${word}')
+                done = true;
+            }
+
 
         }else{
             // do nothing
