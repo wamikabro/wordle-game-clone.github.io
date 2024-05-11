@@ -6,11 +6,14 @@ async function init(){
     let currentGuess = '';
     let currentRow = 0;
     let done = false;    
+    let isLoading = true; // actual game loading controller
+
     const response = await fetch('https://words.dev-apis.com/word-of-the-day?random=1');
     // take out word from response.json's response and store it in word
     let {word} = await response.json();
     word = word.toUpperCase();
-    setLoading(false);
+    setLoading(false); // loading icon toggle
+    isLoading = false; // actual loading to control game
     console.log(word)
     function addLetter(letter){
         if(currentGuess.length < ANSWER_LENGTH){
@@ -47,7 +50,7 @@ async function init(){
             // Win?
             if(currentGuess === word){
                 setTimeout(() => {
-                    alert('You Win!');
+                    alert('You Win!'), 1000;
                 }); 
                 done = true;
                 return;
@@ -70,11 +73,14 @@ async function init(){
             currentRow++;
             currentGuess = '';
 
-            if(currentRow === CHANCES){ // if current row has become 6 already, just close the game
-                alert('you lose, the word was ${word}')
+            // if current row has become 6 already, just close the game
+            if(currentRow === CHANCES){
+                setTimeout(() => {
+                    alert('you lose, the word was ${word}'), 1000;
+                }); 
+                
                 done = true;
             }
-
 
         }else{
             // do nothing
@@ -97,7 +103,7 @@ async function init(){
 
     document.addEventListener("keydown", function handleKeyDown(event){
         // don't listen to anything if game is done
-        if(done === true) return;
+        if(done || isLoading) return;
 
         const action = event.key; // to store any key that's down
         
