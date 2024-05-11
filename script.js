@@ -5,7 +5,7 @@ const ANSWER_LENGTH = 5;
 async function init(){
     let currentGuess = '';
     let currentRow = 0;
-    
+    let done = false;    
     const response = await fetch('https://words.dev-apis.com/word-of-the-day?random=1');
     // take out word from response.json's response and store it in word
     let {word} = await response.json();
@@ -31,7 +31,6 @@ async function init(){
 
     async function commit(){
         if(currentGuess.length === ANSWER_LENGTH){
-            // TODO: win lose?
             const guessedLetters = currentGuess.split('');
             const correctWordLetters = word.split('');
 
@@ -45,11 +44,12 @@ async function init(){
                 }
             }
 
+            // Win?
             if(currentGuess === word){
                 setTimeout(() => {
                     alert('You Win!');
-                });
-                
+                }); 
+                done = true;
                 return;
             }
 
@@ -90,6 +90,9 @@ async function init(){
     }
 
     document.addEventListener("keydown", function handleKeyDown(event){
+        // don't listen to anything if game is done
+        if(done === true) return;
+
         const action = event.key; // to store any key that's down
         
         if(action === 'Enter'){
