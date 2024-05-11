@@ -50,13 +50,23 @@ async function init(){
 
     }
 
+    function markInvalid(){
+        for(i=0; i<ANSWER_LENGTH; i++){
+            letterBoxes[currentRow * ANSWER_LENGTH + i].classList.remove("invalid");
+        }
+        setTimeout(() => {
+            for(i=0; i<ANSWER_LENGTH; i++){
+                letterBoxes[currentRow * ANSWER_LENGTH + i].classList.add("invalid");
+            }            
+        }, 10);
+    }
+
     async function commit(){
         if(currentGuess.length === ANSWER_LENGTH){
-            
             // Validate the word: If it's invalid
             if(!await wordValidator(currentGuess)){
-                // don't run
-                alert('word is invalid');
+                markInvalid();
+                // don't run further
                 return;
             }
             
